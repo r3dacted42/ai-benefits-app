@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { BenefitDetails } from './routes/BenefitDetails';
 import { BenefitInput } from './routes/BenefitInput';
 import { BenefitList } from './routes/BenefitList';
@@ -7,7 +7,7 @@ import { ThemeProvider } from './components/ThemeProvider';
 
 function App() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <ThemeProvider>
                 <AppProvider>
                     <Routes>
@@ -17,7 +17,7 @@ function App() {
                     </Routes>
                 </AppProvider>
             </ThemeProvider>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

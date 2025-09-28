@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,7 @@ import { ArrowLeft, RefreshCw } from 'lucide-react';
 
 import allBenefits from '@/data/benefits.json';
 import { LoadingAnimation } from '@/components/LoadingAnimation';
+import type { Benefit } from '@/lib/types';
 
 export function BenefitDetails() {
     const { id } = useParams<{ id: string }>();
@@ -16,20 +17,14 @@ export function BenefitDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const abortControllerRef = useRef<AbortController | null>(null);
-
-    const benefit = allBenefits.find(b => b.id === id);
+    const benefit = allBenefits.find(b => b.id === id) as Benefit;
 
     const fetchActionPlan = useCallback(async () => {
         if (!benefit) return;
-        abortControllerRef.current?.abort();
-        const controller = new AbortController();
-        abortControllerRef.current = controller;
-
         setIsLoading(true);
         setError(null);
         try {
-            const plan = await generateActionPlan(benefit.title, controller.signal);
+            const plan = await generateActionPlan(benefit.title);
             setActionPlan(plan);
         } catch (err) {
             setError(`${err instanceof Error ? err.message : "An unknown error occurred."}`);
@@ -41,9 +36,6 @@ export function BenefitDetails() {
 
     useEffect(() => {
         fetchActionPlan();
-        return () => {
-            abortControllerRef.current?.abort();
-        };
     }, [id]);
 
     if (!benefit) {

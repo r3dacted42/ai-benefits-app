@@ -1,11 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
+import type { AIRequestBody, AIResponse } from '../src/lib/types';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 if (!process.env.GEMINI_API_KEY) {
     console.warn("Warning: GEMINI_API_KEY is not set. AI functionalities will not work.");
 }
-const categories = ['Dental', 'Mental Health', 'Vision', 'OPD'];
+const categories = ['Dental', 'Vision', 'Mental Health', 'OPD'];
 const modelVersion = 'gemini-2.5-flash-lite';
 console.log(`Using model version: ${modelVersion}`);
 
@@ -18,16 +19,29 @@ export default async function handler(
     }
 
     try {
-        const { promptType, userInput } = req.body;
-        const model = genAI.getGenerativeModel({ model: modelVersion });
+        const { promptType, userInput } = req.body as AIRequestBody;
+        const model = genAI.getGenerativeModel({
+            model: modelVersion,
+            safetySettings: [
+                {
+                    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                    threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                    threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+                },
+            ],
+        });
 
         let prompt = '';
 
         if (promptType === 'classification') {
-            prompt = `Your task is to classify an employee's health need. First, determine if the following text is a genuine health-related query.
+            prompt = `Your task is to classify an employee's health need. \
+                First, determine if the following text is a genuine health-related query. \
                 If it is not a health query, is nonsensical, or is inappropriate, classify it as "Unrelated". \
                 Otherwise, classify it into one of the following categories: {${categories.join(', ')}}. \
-                Return ONLY the single category name. Text: "${userInput}"`;
+                Return ONLY the single category name. Text: """${userInput}"""`;
         } else if (promptType === 'action-plan') {
             prompt = `Generate a 3-step action plan for an employee to avail the "${userInput}" benefit. \
                 Return it as a JSON array of strings, like ["...", "...", "..."] without list numbering. \
@@ -37,10 +51,10 @@ export default async function handler(
         }
 
         const result = await model.generateContent(prompt);
-        const response = await result.response;
+        const response = result.response;
         const text = response.text();
 
-        res.status(200).json({ response: text.trim() });
+        res.status(200).json({ response: text.trim() } as AIResponse);
 
     } catch (error) {
         console.error(error);

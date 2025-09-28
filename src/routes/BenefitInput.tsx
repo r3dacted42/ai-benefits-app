@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -22,29 +22,17 @@ export function BenefitInput() {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const abortControllerRef = useRef<AbortController | null>(null);
-
     const handleSubmit = useCallback(async () => {
         if (!inputValue.trim() || isLoading) return;
-        abortControllerRef.current?.abort();
-        const controller = new AbortController();
-        abortControllerRef.current = controller;
-
         setError(null);
         try {
-            await startBenefitSearch(inputValue, controller.signal);
+            await startBenefitSearch(inputValue);
             navigate('/benefits');
         } catch (err) {
             setError(`${err instanceof Error ? err.message : "An unknown error occurred."}`);
             console.error(err);
         }
-    }, [inputValue, startBenefitSearch]);
-
-    useEffect(() => {
-        return () => {
-            abortControllerRef.current?.abort();
-        };
-    }, []);
+    }, [inputValue]);
 
     const handleSuggestionClick = (suggestion: string) => {
         setInputValue(suggestion);
