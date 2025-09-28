@@ -1,15 +1,14 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
-// We'll import the AI service function later
-// import { classifyBenefit } from '@/services/aiService'; 
-// And our mock data
+import * as aiService from '@/services/aiService';
 import allBenefits from '@/data/benefits.json';
 
 interface AppContextType {
     isLoading: boolean;
     category: string | null;
-    benefits: any[]; // Replace 'any' with a proper Benefit type later
-    startBenefitSearch: (userInput: string) => Promise<void>;
-    generateActionPlan: (benefitTitle: string) => Promise<string[]>;
+    benefits: any[];
+    apiError: string | null;
+    startBenefitSearch: (userInput: string, signal?: AbortSignal) => Promise<void>;
+    generateActionPlan: (benefitTitle: string, signal?: AbortSignal) => Promise<string[]>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -20,23 +19,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const [benefits, setBenefits] = useState<any[]>([]);
     const [apiError, setApiError] = useState<string | null>(null);
 
-    const startBenefitSearch = async (userInput: string) => {
+    const startBenefitSearch = async (userInput: string, signal?: AbortSignal) => {
         setIsLoading(true);
+        setApiError(null);
         setCategory(null);
         setBenefits([]);
         try {
-            console.log(`Simulating AI classification for: "${userInput}"`);
-            await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
-
-            // --- SIMULATE AN AI ERROR ---
-            if (userInput.toLowerCase().includes("skydiving")) {
-                // This is where you'd handle a vague/unsupported prompt from the AI
+            const classifiedCategory = await aiService.classifyBenefit(userInput, signal);
+            if (classifiedCategory === "Unrelated") {
                 throw new Error("Query is not related to health benefits.");
             }
-
-            const classifiedCategory = "Dental";
             setCategory(classifiedCategory);
-
             const filteredBenefits = allBenefits.filter(b => b.category === classifiedCategory);
             setBenefits(filteredBenefits);
         } catch (error) {
@@ -49,22 +42,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const generateActionPlan = async (benefitTitle: string): Promise<string[]> => {
-        console.log(`Generating action plan for: "${benefitTitle}"`);
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
-
-        // In your real serverless function, you would use a prompt like:
-        // `Generate a 3-step action plan for an employee to avail the "${benefitTitle}" benefit. Return it as a JSON array of strings.`
-
-        // --- SIMULATE A SUCCESSFUL AI RESPONSE ---
-        const simulatedPlan = [
-            "Find an in-network provider using the company's insurance portal.",
-            "Schedule an appointment and mention your insurance details.",
-            "Submit the final bill on the reimbursement portal for a claim."
-        ];
-
-        // return JSON.parse(aiResponse);
-        return simulatedPlan;
+    const generateActionPlan = async (benefitTitle: string, signal?: AbortSignal): Promise<string[]> => {
+        return aiService.fetchActionPlan(benefitTitle, signal);
     };
 
     const value = {

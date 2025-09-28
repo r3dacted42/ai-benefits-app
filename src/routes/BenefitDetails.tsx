@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
@@ -16,26 +16,34 @@ export function BenefitDetails() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const abortControllerRef = useRef<AbortController | null>(null);
+
     const benefit = allBenefits.find(b => b.id === id);
 
-    const fetchActionPlan = async () => {
+    const fetchActionPlan = useCallback(async () => {
         if (!benefit) return;
+        abortControllerRef.current?.abort();
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
 
         setIsLoading(true);
         setError(null);
         try {
-            const plan = await generateActionPlan(benefit.title);
+            const plan = await generateActionPlan(benefit.title, controller.signal);
             setActionPlan(plan);
         } catch (err) {
-            setError("Failed to generate an action plan. Please try again.");
+            setError(`${err instanceof Error ? err.message : "An unknown error occurred."}`);
             console.error(err);
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [benefit, generateActionPlan]);
 
     useEffect(() => {
         fetchActionPlan();
+        return () => {
+            abortControllerRef.current?.abort();
+        };
     }, [id]);
 
     if (!benefit) {
