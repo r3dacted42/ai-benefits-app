@@ -1,0 +1,72 @@
+[
+    {
+        "id": "dental-01",
+        "category": "Dental",
+        "title": "Routine Dental Check-up",
+        "coverage": "100% covered, up to 2 times a year",
+        "description": "Includes professional cleaning, scaling, polishing, and a full dental examination to maintain your oral health."
+    },
+    {
+        "id": "dental-02",
+        "category": "Dental",
+        "title": "Major Dental Procedures",
+        "coverage": "Up to ₹30,000 per year",
+        "description": "Coverage for essential procedures like root canals, tooth extractions, and cavity fillings."
+    },
+    {
+        "id": "dental-03",
+        "category": "Dental",
+        "title": "Orthodontic Treatment",
+        "coverage": "50% coinsurance",
+        "description": "Support for orthodontic needs, including braces and aligners, for both adults and children."
+    },
+    {
+        "id": "mental-01",
+        "category": "Mental Health",
+        "title": "Therapy & Counseling Sessions",
+        "coverage": "Up to 12 sessions per year",
+        "description": "Confidential access to licensed therapists and counselors for online or in-person sessions."
+    },
+    {
+        "id": "mental-02",
+        "category": "Mental Health",
+        "title": "Mindfulness & Meditation Apps",
+        "coverage": "Full subscription covered",
+        "description": "Get a free premium subscription to popular wellness apps like Calm or Headspace."
+    },
+    {
+        "id": "vision-01",
+        "category": "Vision",
+        "title": "Annual Eye Examination",
+        "coverage": "100% covered annually",
+        "description": "A comprehensive eye exam with a network optometrist to check your vision and eye health."
+    },
+    {
+        "id": "vision-02",
+        "category": "Vision",
+        "title": "Eyewear Reimbursement",
+        "coverage": "Up to ₹8,000 per year",
+        "description": "Get reimbursed for prescription glasses, contact lenses, and frames from any provider."
+    },
+    {
+        "id": "opd-01",
+        "category": "OPD",
+        "title": "General Physician Consultation",
+        "coverage": "Up to ₹1,000 per consultation",
+        "description": "Coverage for out-patient doctor visits for general health concerns, fever, or injuries."
+    },
+    {
+        "id": "opd-02",
+        "category": "OPD",
+        "title": "Pharmacy & Medication",
+        "coverage": "Up to ₹15,000 annually",
+        "description": "Reimbursement for prescribed medications and pharmacy bills for out-patient treatments."
+    },
+    {
+        "id": "opd-03",
+        "category": "OPD",
+        "title": "Diagnostic Tests & Labs",
+        "coverage": "80% coverage",
+        "description": "Support for prescribed diagnostic tests, including blood work, X-rays, and scans."
+    }
+]
