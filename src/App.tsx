@@ -1,15 +1,17 @@
 import { HashRouter } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
-import { ThemeProvider } from './components/ThemeProvider';
 import { AnimatedRoutes } from './components/AnimatedRoutes';
+import { Toaster } from 'sonner';
+import { ThemeProvider } from 'next-themes';
 
 function App() {
     return (
         <HashRouter>
-            <ThemeProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                 <AppProvider>
                     <AnimatedRoutes />
                 </AppProvider>
+                <Toaster position='top-center' />
             </ThemeProvider>
         </HashRouter>
     );

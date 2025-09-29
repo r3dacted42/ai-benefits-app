@@ -2,11 +2,12 @@ import { useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Loader2 } from 'lucide-react';
+import { Croissant, Donut, Loader2, MessageSquareWarning } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAppContext } from '@/context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { toast } from 'sonner';
 
 const suggestions = [
     'I have tooth pain, what can I do?',
@@ -19,18 +20,22 @@ const suggestions = [
 export function BenefitInput() {
     const { isLoading, startBenefitSearch } = useAppContext();
     const [inputValue, setInputValue] = useState('');
-    const [error, setError] = useState<string | null>(null);
+    const [errorCount, setErrorCount] = useState(1);
     const navigate = useNavigate();
 
     const handleSubmit = useCallback(async () => {
         if (!inputValue.trim() || isLoading) return;
-        setError(null);
         try {
             await startBenefitSearch(inputValue);
             navigate('/benefits');
         } catch (err) {
-            setError(`${err instanceof Error ? err.message : "An unknown error occurred."}`);
-            console.error(err);
+            setErrorCount((count) => count + 1);
+            toast(err instanceof Error ? err.message : "An unknown error occurred.", {
+                icon: ((errorCount % 3 == 0) ? <Donut /> : <MessageSquareWarning />),
+                description: "Please try again.",
+                duration: 5000,
+                action: { label: ((errorCount % 3 == 0) ? <Croissant /> : 'OK'), onClick: () => { } },
+            });
         }
     }, [inputValue]);
 
@@ -77,9 +82,6 @@ export function BenefitInput() {
                             disabled={isLoading}
                             rows={4}
                         />
-                        {error && (
-                            <p className="text-sm font-medium text-red-500">{error}</p>
-                        )}
                     </div>
                 </CardContent>
                 <CardFooter>

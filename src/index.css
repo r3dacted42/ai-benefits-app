@@ -151,3 +151,20 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Customize sonner toaster */
+[data-sonner-toast] {
+    --normal-bg: var(--popover);
+    --normal-text: var(--popover-foreground);
+    --normal-border: var(--border);
+}
+
+/* AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */
+[data-sonner-toast] [data-description] {
+    color: hsl(var(--popover-foreground)) !important;
+}
+
+[data-sonner-toast] [data-icon] {
+    --toast-icon-margin-start: calc(var(--spacing) * 1);
+    --toast-icon-margin-end: calc(var(--spacing) * 4);
+}

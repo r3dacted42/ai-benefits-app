@@ -58,6 +58,6 @@ export async function fetchActionPlan(benefit: Benefit): Promise<string[]> {
     try {
         return JSON.parse(text);
     } catch {
-        throw new Error(`AI returned an invalid format for the action plan: ${text}`);
+        throw new Error("AI returned ill-formatted data.");
     }
 }

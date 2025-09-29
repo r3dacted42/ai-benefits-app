@@ -3,11 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Croissant, Donut, MessageSquareWarning, RefreshCw } from 'lucide-react';
 
 import allBenefits from '@/data/benefits.json';
 import { LoadingAnimation } from '@/components/LoadingAnimation';
 import type { Benefit } from '@/lib/types';
+import { toast } from 'sonner';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function BenefitDetails() {
     const { id } = useParams<{ id: string }>();
@@ -15,24 +17,31 @@ export function BenefitDetails() {
 
     const [actionPlan, setActionPlan] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState(false);
+    const [errorCount, setErrorCount] = useState(1);
 
     const benefit = allBenefits.find(b => b.id === id) as Benefit;
 
     const fetchActionPlan = useCallback(async () => {
         if (!benefit) return;
         setIsLoading(true);
-        setError(null);
+        setError(false);
         try {
             const plan = await generateActionPlan(benefit);
             setActionPlan(plan);
         } catch (err) {
-            setError(`${err instanceof Error ? err.message : "An unknown error occurred."}`);
-            console.error(err);
+            setError(true);
+            setErrorCount((count) => count + 1);
+            toast(err instanceof Error ? err.message : "An unknown error occurred.", {
+                icon: ((errorCount % 3 == 0) ? <Donut /> : <MessageSquareWarning />),
+                description: "Please try again.",
+                duration: Infinity,
+                action: { label: ((errorCount % 3 == 0) ? <Croissant /> : 'OK'), onClick: () => { fetchActionPlan() } },
+            });
         } finally {
             setIsLoading(false);
         }
-    }, [benefit, generateActionPlan]);
+    }, [benefit]);
 
     useEffect(() => {
         fetchActionPlan();
@@ -47,6 +56,23 @@ export function BenefitDetails() {
                 </Button>
             </div>
         );
+    }
+
+    function ErrorSkeleton() {
+        return (<div className='space-y-4'>
+            <div className='space-y-2'>
+                <Skeleton className='h-6 w-full' />
+                <Skeleton className='h-6 w-2/3' />
+            </div>
+            <div className='space-y-2'>
+                <Skeleton className='h-6 w-full' />
+                <Skeleton className='h-6 w-5/6' />
+            </div>
+            <div className='space-y-2'>
+                <Skeleton className='h-6 w-full' />
+                <Skeleton className='h-6 w-3/4' />
+            </div>
+        </div>);
     }
 
     return (
@@ -74,7 +100,7 @@ export function BenefitDetails() {
                         {isLoading ? (
                             <LoadingAnimation />
                         ) : error ? (
-                            <p className="text-red-500">{error}</p>
+                            <ErrorSkeleton />
                         ) : (
                             <div className="space-y-4">
                                 {actionPlan.map((step, index) => (
