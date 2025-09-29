@@ -8,25 +8,23 @@ The app features a multi-screen flow, a robust state management system, dark mod
 [Vercel Deployment](https://ai-benefits-app.vercel.app/)
 
 ## ✨ Key Features
-- **Natural Language Input**: Users can describe their health needs in plain English.
+- **Natural Language Input**: Users can describe their health needs in plain English or select from common suggestions.
 - **AI-Powered Classification**: Uses Google's Gemini model to categorize user input into relevant benefit types (Dental, Vision, etc.).
-- **Context-Aware Action Plans**: Generates a custom 3-step action plan for any selected benefit, taking into account its specific coverage and description.
+- **Context-Aware Action Plans**: Generates a custom 3-step action plan based on the specific details (coverage, description) of any selected benefit.
 - **Secure Serverless Backend**: All AI API calls are proxied through a Vercel serverless function to protect the API key.
-- **Modern UI/UX**: Built with React, TypeScript, and shadcn/ui, featuring dark mode and smooth transitions.
+- **Modern UI/UX**: Built with React, TypeScript, and shadcn/ui.
+- **Polished Experience**: Features include dark mode, smooth directional page transitions powered by **Framer Motion**, Lottie animations for loading states, and subtle UI hints for scrollable content.
 - **Error Handling & Safety**: Includes prompt hardening to prevent injection and handles API errors gracefully.
 
 ## 📸 Screenshots
 1. Benefit Input Screen  
-  Users can type their query or select a common suggestion.
+  Users can type their query or select a common suggestion. Features dark mode toggle.
 
 2. Benefit List Screen  
-  The app displays relevant benefit cards based on the AI's classification.
+  The app displays relevant benefit cards with a scroll hint shadow.
 
 3. Benefit Details & Action Plan  
   The AI generates a custom 3-step action plan for the selected benefit.
-
-4. Dark Mode  
-  Full dark mode support for a better user experience.
 
 ## 🏛️ Architecture & State Management
 The application is a **Single-Page Application (SPA)** built with **Vite**, **React**, and **TypeScript**.
@@ -37,7 +35,7 @@ The application is a **Single-Page Application (SPA)** built with **Vite**, **Re
 - **State Management**: Application-wide state is managed using React Context (`AppContext.tsx`). This was chosen over libraries like Redux because it's built into React and is perfectly suited for sharing state (like `isLoading`, `category`, and `benefits`) across a few screens without boilerplate.
 - **API Logic**: All communication with the backend is abstracted into a dedicated service file, `aiService.ts`. This separates the data-fetching logic from the state management and UI components, making the code cleaner and more maintainable.
 - **Backend**: A Vercel Serverless Function (`api/generate.ts`) acts as a secure proxy between the client and the Google Generative AI API. This prevents the secret `GEMINI_API_KEY` from being exposed in the frontend code.
-- **Routing**: Client-side routing is handled by `react-router-dom` using `HashRouter` for simplicity and broad compatibility with static hosting platforms.
+- **Routing**: Client-side routing is handled by `react-router-dom` in `App.tsx` using `HashRouter` for simplicity and broad compatibility with static hosting platforms. All routes are listed within an `AnimatedRoutes.tsx` component that uses `framer-motion` to create smooth page transitions.
 
 ## 🧠 AI Prompts & Refinements
 The application uses two distinct prompts sent to the Gemini model (`gemini-2.5-flash-lite`).
@@ -54,11 +52,10 @@ The application uses two distinct prompts sent to the Gemini model (`gemini-2.5-
 2. **Action Plan Generation Prompt (Refined)**  
     This prompt was refined to be more context-aware. Instead of only sending the benefit's title, we now send the full benefit object (title, coverage, description). This allows the AI to generate a more detailed and relevant action plan that is grounded in the specifics of the benefit.
     ```
-    Generate a 3-step action plan for an employee to avail the "${benefitInfo.title}" benefit.
-    The benefit has the following coverage: "${benefitInfo.coverage}"
-    and description: "${benefitInfo.description}".
-    Return a JSON array of strings describing the steps, like ["...", "...", "..."] without list numbering.
-    Do not include markdown formatting.
+    Generate a 3-step action plan for an employee to avail the """${benefitInfo.title}""" benefit.
+    The benefit has the following coverage: """${benefitInfo.coverage}"""
+    and description: """${benefitInfo.description}""".
+    Return ONLY a JSON array of strings describing the steps, like ["1. ...", "2. ...", "3. ..."].
     ```
 
 ## 🛠️ Known Issues & Potential Improvements
