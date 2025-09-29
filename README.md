@@ -19,12 +19,30 @@ The app features a multi-screen flow, a robust state management system, dark mod
 ## 📸 Screenshots
 1. Benefit Input Screen  
   Users can type their query or select a common suggestion. Features dark mode toggle.
+  <table>
+    <tr>
+        <td> <img src="./screenshots/BenefitInput.png" style="box-fit: contain" > </td>
+        <td> <img src="./screenshots/BenefitInput_phone.png" style="box-fit: contain" > </td>
+    </tr>
+  </table>
 
 2. Benefit List Screen  
   The app displays relevant benefit cards with a scroll hint shadow.
+  <table>
+    <tr>
+        <td> <img src="./screenshots/BenefitList.png" style="box-fit: contain" > </td>
+        <td> <img src="./screenshots/BenefitList_phone.png" style="box-fit: contain" > </td>
+    </tr>
+  </table>
 
 3. Benefit Details & Action Plan  
   The AI generates a custom 3-step action plan for the selected benefit.
+  <table>
+    <tr>
+        <td> <img src="./screenshots/BenefitDetails.png" style="box-fit: contain" > </td>
+        <td> <img src="./screenshots/BenefitDetails_phone.png" style="box-fit: contain" > </td>
+    </tr>
+  </table>
 
 ## 🏛️ Architecture & State Management
 The application is a **Single-Page Application (SPA)** built with **Vite**, **React**, and **TypeScript**.
