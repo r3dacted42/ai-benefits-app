@@ -39,7 +39,7 @@ export function BenefitInput() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-950">
+        <div className="flex items-center justify-center min-h-screen">
             <div className="absolute top-4 right-4">
                 <ThemeToggle />
             </div>

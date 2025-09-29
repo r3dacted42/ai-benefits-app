@@ -42,11 +42,10 @@ export default async function handler(
                 Otherwise, classify it into one of the following categories: {${clfInfo.categories.join(', ')}}. \
                 Return ONLY the single category name. Text: """${clfInfo.userInput}"""`;
         } else if (promptType === 'action-plan' && benefitInfo) {
-            prompt = `Generate a 3-step action plan for an employee to avail the "${benefitInfo.title}" benefit. \
-                The benefit has the following coverage: "${benefitInfo.coverage}" \
-                and description: "${benefitInfo.description}". \
-                Return a JSON array of strings describing the steps, like ["...", "...", "..."] without list numbering. \
-                Do not include markdown formatting.`;
+            prompt = `Generate a 3-step action plan for an employee to avail the """${benefitInfo.title}""" benefit. \
+                The benefit has the following coverage: """${benefitInfo.coverage}""" \
+                and description: """${benefitInfo.description}""". \
+                Return ONLY a JSON array of strings describing the steps, like ["1. ...", "2. ...", "3. ..."].`;
         } else {
             return res.status(400).json({ error: 'Invalid prompt type or missing required data' });
         }

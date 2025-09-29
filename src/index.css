@@ -9,6 +9,22 @@
     transition-duration: 300ms;
 }
 
+.scroll-fade {
+    @apply py-2;
+    @apply my-2;
+    @apply overflow-y-auto;
+    -webkit-mask-image: linear-gradient(to bottom,
+            transparent,
+            black 1rem,
+            black calc(100% - 1rem),
+            transparent);
+    mask-image: linear-gradient(to bottom,
+            transparent,
+            black 1rem,
+            black calc(100% - 1rem),
+            transparent);
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -121,6 +137,12 @@
 @layer base {
     * {
         @apply border-border outline-ring/50;
+    }
+
+    html,
+    body {
+        @apply overflow-y-hidden;
+        scroll-behavior: smooth;
     }
 
     body {

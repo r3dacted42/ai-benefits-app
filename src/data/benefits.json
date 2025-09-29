@@ -21,6 +21,20 @@
         "description": "Support for orthodontic needs, including braces and aligners, for both adults and children."
     },
     {
+        "id": "dental-04",
+        "category": "Dental",
+        "title": "Cosmetic Dentistry",
+        "coverage": "Up to ₹15,000 lifetime limit",
+        "description": "Includes coverage for procedures like teeth whitening, veneers, and cosmetic bonding."
+    },
+    {
+        "id": "dental-05",
+        "category": "Dental",
+        "title": "Dental Implants",
+        "coverage": "25% coinsurance, up to 2 implants",
+        "description": "Partial coverage for the surgical placement of dental implants to replace missing teeth."
+    },
+    {
         "id": "mental-01",
         "category": "Mental Health",
         "title": "Therapy & Counseling Sessions",
@@ -35,6 +49,20 @@
         "description": "Get a free premium subscription to popular wellness apps like Calm or Headspace."
     },
     {
+        "id": "mental-03",
+        "category": "Mental Health",
+        "title": "Psychiatrist Consultation",
+        "coverage": "Up to 4 consultations per year",
+        "description": "Coverage for consultations with a psychiatrist for diagnosis and medical management."
+    },
+    {
+        "id": "mental-04",
+        "category": "Mental Health",
+        "title": "Employee Assistance Program (EAP)",
+        "coverage": "24/7 confidential support",
+        "description": "Access to a 24/7 helpline for immediate support on work-life, stress, and personal issues."
+    },
+    {
         "id": "vision-01",
         "category": "Vision",
         "title": "Annual Eye Examination",
@@ -47,6 +75,20 @@
         "title": "Eyewear Reimbursement",
         "coverage": "Up to ₹8,000 per year",
         "description": "Get reimbursed for prescription glasses, contact lenses, and frames from any provider."
+    },
+    {
+        "id": "vision-03",
+        "category": "Vision",
+        "title": "LASIK & Vision Correction Surgery",
+        "coverage": "₹20,000 one-time benefit",
+        "description": "A one-time allowance towards laser eye surgery and other corrective vision procedures."
+    },
+    {
+        "id": "vision-04",
+        "category": "Vision",
+        "title": "Computer Vision Care",
+        "coverage": "₹3,000 for blue-light glasses",
+        "description": "Special coverage for prescription or non-prescription blue-light filtering glasses to reduce eye strain."
     },
     {
         "id": "opd-01",
@@ -68,5 +110,19 @@
         "title": "Diagnostic Tests & Labs",
         "coverage": "80% coverage",
         "description": "Support for prescribed diagnostic tests, including blood work, X-rays, and scans."
+    },
+    {
+        "id": "opd-04",
+        "category": "OPD",
+        "title": "Specialist Consultation",
+        "coverage": "Up to ₹2,500 per consultation, 4 per year",
+        "description": "Coverage for visits to specialists like dermatologists, orthopedics, and cardiologists."
+    },
+    {
+        "id": "opd-05",
+        "category": "OPD",
+        "title": "Annual Health Check-up",
+        "coverage": "1 full package covered per year",
+        "description": "A comprehensive health check-up package from our network of partner labs, included annually."
     }
 ]

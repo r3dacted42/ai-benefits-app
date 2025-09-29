@@ -1,20 +1,14 @@
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import { BenefitDetails } from './routes/BenefitDetails';
-import { BenefitInput } from './routes/BenefitInput';
-import { BenefitList } from './routes/BenefitList';
+import { HashRouter } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import { ThemeProvider } from './components/ThemeProvider';
+import { AnimatedRoutes } from './components/AnimatedRoutes';
 
 function App() {
     return (
         <HashRouter>
             <ThemeProvider>
                 <AppProvider>
-                    <Routes>
-                        <Route index element={<BenefitInput />} />
-                        <Route path="/benefits" element={<BenefitList />} />
-                        <Route path="/benefits/:id" element={<BenefitDetails />} />
-                    </Routes>
+                    <AnimatedRoutes />
                 </AppProvider>
             </ThemeProvider>
         </HashRouter>

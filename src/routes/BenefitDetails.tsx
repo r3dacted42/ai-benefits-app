@@ -50,9 +50,9 @@ export function BenefitDetails() {
     }
 
     return (
-        <div className="flex justify-center min-h-screen bg-slate-50 dark:bg-slate-950">
-            <div className='w-full p-4 max-w-3xl mx-auto'>
-                <Card>
+        <div className="flex justify-center h-screen">
+            <div className='flex flex-col w-full p-4 max-w-3xl mx-auto'>
+                <Card className='flex-shrink-0'>
                     <CardHeader>
                         <CardTitle className="text-3xl font-semibold">{benefit.title}</CardTitle>
                         <CardDescription>{benefit.coverage}</CardDescription>
@@ -62,30 +62,30 @@ export function BenefitDetails() {
                     </CardContent>
                 </Card>
 
-                <div className="mt-6">
-                    <div className="flex items-center justify-between mb-4">
+                <div className="flex-grow flex flex-col mt-6 min-h-0 bg-background p-6 rounded-lg border">
+                    <div className="flex-shrink-0 flex items-center justify-between mb-4">
                         <h2 className="text-2xl font-semibold">Your Action Plan</h2>
                         <Button variant="outline" className='cursor-pointer' size="icon" onClick={fetchActionPlan} disabled={isLoading}>
                             <RefreshCw className={`${isLoading ? 'animate-spin' : ''}`} />
                         </Button>
                     </div>
 
-                    <div className='bg-background p-6 rounded-lg border'>
+                    <div className='flex-grow scroll-fade'>
                         {isLoading ? (
                             <LoadingAnimation />
                         ) : error ? (
                             <p className="text-red-500">{error}</p>
                         ) : (
-                            <ol className="list-decimal list-inside space-y-4">
+                            <div className="space-y-4">
                                 {actionPlan.map((step, index) => (
-                                    <li key={index} className="pl-2">{step}</li>
+                                    <p key={index} className="pl-2">{step}</p>
                                 ))}
-                            </ol>
+                            </div>
                         )}
                     </div>
                 </div>
 
-                <Button className="mt-6" asChild>
+                <Button className="flex-shrink-0 mt-6" asChild>
                     <Link to="/benefits">
                         <ArrowLeft className='mr-2' />
                         Back to Benefits List

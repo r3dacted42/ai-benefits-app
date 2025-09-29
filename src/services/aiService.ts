@@ -46,9 +46,18 @@ export async function fetchActionPlan(benefit: Benefit): Promise<string[]> {
     }
 
     const data = await response.json() as AIResponse;
+    let text = data.response;
+    if (text.includes("```json") || text.includes("```")) {
+        // Remove any markdown code block formatting
+        const codeBlockRegex = /```json\s*([\s\S]*?)\s*```|```\s*([\s\S]*?)\s*```/;
+        const match = text.match(codeBlockRegex);
+        if (match) {
+            text = match[1] || match[2];
+        }
+    }
     try {
-        return JSON.parse(data.response);
+        return JSON.parse(text);
     } catch {
-        throw new Error('AI returned an invalid format for the action plan.');
+        throw new Error(`AI returned an invalid format for the action plan: ${text}`);
     }
 }
