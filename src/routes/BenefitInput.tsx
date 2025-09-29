@@ -39,13 +39,13 @@ export function BenefitInput() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
-            <div className="absolute top-4 right-4">
-                <ThemeToggle />
-            </div>
+        <div className="flex items-center justify-center min-h-full">
             <Card className="m-4 w-full max-w-lg shadow-lg">
                 <CardHeader>
-                    <CardTitle className="text-4xl font-bold">Discover Your Benefits</CardTitle>
+                    <CardTitle className="flex flex-row justify-between text-4xl font-bold">
+                        Discover Your Benefits
+                        <ThemeToggle className='self-start' />
+                    </CardTitle>
                     <CardDescription>
                         Tell us about your health need, and we'll find the right benefits for you.
                     </CardDescription>
