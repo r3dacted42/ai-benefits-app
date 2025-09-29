@@ -4,10 +4,10 @@ This web application helps employees discover company benefits relevant to their
 
 The app features a multi-screen flow, a robust state management system, dark mode, and a secure serverless backend for handling AI requests.  
 
-## 🚀 Live Demo
+## Live Demo
 [Vercel Deployment](https://ai-benefits-app.vercel.app/)
 
-## ✨ Key Features
+## Key Features
 - **Natural Language Input**: Users can describe their health needs in plain English or select from common suggestions.
 - **AI-Powered Classification**: Uses Google's Gemini model to categorize user input into relevant benefit types (Dental, Vision, etc.).
 - **Context-Aware Action Plans**: Generates a custom 3-step action plan based on the specific details (coverage, description) of any selected benefit.
@@ -16,35 +16,7 @@ The app features a multi-screen flow, a robust state management system, dark mod
 - **Polished Experience**: Features include dark mode, smooth page and item transitions powered by **Framer Motion**, Lottie animation for details loading state, and subtle UI hints for scrollable content.
 - **Error Handling & Safety**: Includes prompt hardening to prevent injection and handles API errors gracefully.
 
-## 📸 Screenshots
-1. Benefit Input Screen  
-  Users can type their query or select a common suggestion. Features dark mode toggle.
-  <table>
-    <tr>
-        <td> <img src="./screenshots/BenefitInput.png" style="box-fit: contain" > </td>
-        <td> <img src="./screenshots/BenefitInput_phone.png" style="box-fit: contain" > </td>
-    </tr>
-  </table>
-
-2. Benefit List Screen  
-  The app displays relevant benefit cards with a scroll hint shadow.
-  <table>
-    <tr>
-        <td> <img src="./screenshots/BenefitList.png" style="box-fit: contain" > </td>
-        <td> <img src="./screenshots/BenefitList_phone.png" style="box-fit: contain" > </td>
-    </tr>
-  </table>
-
-3. Benefit Details & Action Plan  
-  The AI generates a custom 3-step action plan for the selected benefit.
-  <table>
-    <tr>
-        <td> <img src="./screenshots/BenefitDetails.png" style="box-fit: contain" > </td>
-        <td> <img src="./screenshots/BenefitDetails_phone.png" style="box-fit: contain" > </td>
-    </tr>
-  </table>
-
-## 🏛️ Architecture & State Management
+## Architecture & State Management
 The application is a **Single-Page Application (SPA)** built with **Vite**, **React**, and **TypeScript**.
 - **Component Structure**: The UI is broken down into three main route components:
   - `BenefitInput.tsx`: The initial screen for user input.
@@ -55,7 +27,7 @@ The application is a **Single-Page Application (SPA)** built with **Vite**, **Re
 - **Backend**: A Vercel Serverless Function (`api/generate.ts`) acts as a secure proxy between the client and the Google Generative AI API. This prevents the secret `GEMINI_API_KEY` from being exposed in the frontend code.
 - **Routing**: Client-side routing is handled by `react-router-dom` in `App.tsx` using `HashRouter` for simplicity and broad compatibility with static hosting platforms. All routes are listed within an `AnimatedRoutes.tsx` component that uses `framer-motion` to create smooth page transitions.
 
-## 🧠 AI Prompts & Refinements
+## AI Prompts & Refinements
 The application uses two distinct prompts sent to the Gemini model (`gemini-2.5-flash-lite`).
 1. **Classification Prompt**  
     This prompt is designed to be robust and secure. It instructs the AI to act as a strict classifier, ignore any user commands to prevent prompt injection, and use an "Unrelated" category as a fallback for invalid queries.
@@ -76,7 +48,35 @@ The application uses two distinct prompts sent to the Gemini model (`gemini-2.5-
     Return ONLY a JSON array of strings describing the steps, like ["1. ...", "2. ...", "3. ..."].
     ```
 
-## 🛠️ Known Issues & Potential Improvements
+## Screenshots
+1. Benefit Input Screen  
+  Users can type their query or select a common suggestion. Features dark mode toggle.
+  <table>
+    <tr>
+        <td> <img src="https://github.com/r3dacted42/ai-benefits-app/blob/main/screenshots/BenefitInput.png?raw=true" style="object-fit: contain" > </td>
+        <td> <img src="https://github.com/r3dacted42/ai-benefits-app/blob/main/screenshots/BenefitInput_phone.png?raw=true" style="object-fit: contain" > </td>
+    </tr>
+  </table>
+
+2. Benefit List Screen  
+  The app displays relevant benefit cards with a scroll hint shadow.
+  <table>
+    <tr>
+        <td> <img src="https://github.com/r3dacted42/ai-benefits-app/blob/main/screenshots/BenefitList.png?raw=true" style="object-fit: contain" > </td>
+        <td> <img src="https://github.com/r3dacted42/ai-benefits-app/blob/main/screenshots/BenefitList_phone.png?raw=true" style="object-fit: contain" > </td>
+    </tr>
+  </table>
+
+3. Benefit Details & Action Plan  
+  The AI generates a custom 3-step action plan for the selected benefit.
+  <table>
+    <tr>
+        <td> <img src="https://github.com/r3dacted42/ai-benefits-app/blob/main/screenshots/BenefitDetails.png?raw=true" style="object-fit: contain" > </td>
+        <td> <img src="https://github.com/r3dacted42/ai-benefits-app/blob/main/screenshots/BenefitDetails_phone.png?raw=true" style="object-fit: contain" > </td>
+    </tr>
+  </table>
+
+## Known Issues & Potential Improvements
 - **Static Benefits Data**: All benefit information is currently loaded from a mock `benefits.json` file. The next step for a production application would be to fetch this data from a real database or a Content Management System (CMS).
 - **Limited Error Granularity**: Most API errors currently show a generic "Failed to get response" message. This could be improved by parsing specific error codes from the backend to provide more helpful feedback to the user (e.g., "Rate limit exceeded, please wait a moment.").
 - **No Chat History**: The interaction is stateless. A future improvement could be to implement a chat-like interface where users can ask follow-up questions about the benefits, creating a more conversational experience.
