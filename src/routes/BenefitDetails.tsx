@@ -24,7 +24,7 @@ export function BenefitDetails() {
         setIsLoading(true);
         setError(null);
         try {
-            const plan = await generateActionPlan(benefit.title);
+            const plan = await generateActionPlan(benefit);
             setActionPlan(plan);
         } catch (err) {
             setError(`${err instanceof Error ? err.message : "An unknown error occurred."}`);

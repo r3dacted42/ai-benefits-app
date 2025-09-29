@@ -9,7 +9,7 @@ interface AppContextType {
     benefits: Benefit[];
     apiError: string | null;
     startBenefitSearch: (userInput: string) => Promise<void>;
-    generateActionPlan: (benefitTitle: string) => Promise<string[]>;
+    generateActionPlan: (benefit: Benefit) => Promise<string[]>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -43,8 +43,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const generateActionPlan = async (benefitTitle: string): Promise<string[]> => {
-        return aiService.fetchActionPlan(benefitTitle);
+    const generateActionPlan = async (benefit: Benefit): Promise<string[]> => {
+        return aiService.fetchActionPlan(benefit);
     };
 
     const value = {

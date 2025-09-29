@@ -14,7 +14,8 @@ export type PromptType = 'classification' | 'action-plan';
 
 export type AIRequestBody = {
     promptType: PromptType;
-    userInput: string;
+    clfInfo?: { userInput: string, categories: typeof categories };
+    benefitInfo?: Benefit;
 };
 
 export type AIResponse = {

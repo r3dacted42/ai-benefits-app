@@ -1,5 +1,5 @@
 import categories from "@/data/categories";
-import type { AIRequestBody, AIResponse, Category } from "@/lib/types";
+import type { AIRequestBody, AIResponse, Benefit, Category } from "@/lib/types";
 
 const API_ENDPOINT = '/api/generate';
 
@@ -12,7 +12,10 @@ export async function classifyBenefit(userInput: string): Promise<Category> {
     const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ promptType: 'classification', userInput: userInput } as AIRequestBody),
+        body: JSON.stringify({
+            promptType: 'classification',
+            clfInfo: { userInput: userInput, categories: categories },
+        } as AIRequestBody),
     });
 
     if (!response.ok) {
@@ -28,14 +31,14 @@ export async function classifyBenefit(userInput: string): Promise<Category> {
 
 /**
  * Sends a benefit title to the backend to generate a 3-step action plan.
- * @param benefitTitle The title of the selected benefit.
+ * @param benefitId The id of the selected benefit.
  * @returns An array of strings representing the action plan.
  */
-export async function fetchActionPlan(benefitTitle: string): Promise<string[]> {
+export async function fetchActionPlan(benefit: Benefit): Promise<string[]> {
     const response = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ promptType: 'action-plan', userInput: benefitTitle } as AIRequestBody),
+        body: JSON.stringify({ promptType: 'action-plan', benefitInfo: benefit } as AIRequestBody),
     });
 
     if (!response.ok) {
