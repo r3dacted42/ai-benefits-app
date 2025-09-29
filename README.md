@@ -13,7 +13,7 @@ The app features a multi-screen flow, a robust state management system, dark mod
 - **Context-Aware Action Plans**: Generates a custom 3-step action plan based on the specific details (coverage, description) of any selected benefit.
 - **Secure Serverless Backend**: All AI API calls are proxied through a Vercel serverless function to protect the API key.
 - **Modern UI/UX**: Built with React, TypeScript, and shadcn/ui.
-- **Polished Experience**: Features include dark mode, smooth directional page transitions powered by **Framer Motion**, Lottie animations for loading states, and subtle UI hints for scrollable content.
+- **Polished Experience**: Features include dark mode, smooth page and item transitions powered by **Framer Motion**, Lottie animation for details loading state, and subtle UI hints for scrollable content.
 - **Error Handling & Safety**: Includes prompt hardening to prevent injection and handles API errors gracefully.
 
 ## 📸 Screenshots

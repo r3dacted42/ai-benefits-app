@@ -140,7 +140,9 @@
     }
 
     html,
-    body {
+    body,
+    #root {
+        @apply h-full;
         @apply overflow-y-hidden;
         scroll-behavior: smooth;
     }

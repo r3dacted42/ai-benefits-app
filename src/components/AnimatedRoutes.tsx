@@ -25,7 +25,7 @@ function PageAnimationWrapper({ children }: { children: ReactNode }) {
             exit="out"
             variants={variants}
             transition={pageTransition}
-            className="absolute w-full"
+            className="size-full"
         >
             {children}
         </motion.div>
@@ -36,7 +36,7 @@ export function AnimatedRoutes() {
     const location = useLocation();
 
     return (
-        <div className="w-full">
+        <div className="size-full">
             <AnimatePresence mode="sync" initial={false}>
                 <Routes location={location} key={location.pathname}>
                     <Route

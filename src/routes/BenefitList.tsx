@@ -58,7 +58,7 @@ export function BenefitList() {
     }
 
     return (
-        <div className="flex justify-center h-screen">
+        <div className="flex justify-center h-full">
             <div className='flex flex-col w-full p-4 max-w-4xl mx-auto'>
                 <div className='flex-shrink-0'>
                     <h1 className='text-4xl font-bold'>{category} Benefits</h1>

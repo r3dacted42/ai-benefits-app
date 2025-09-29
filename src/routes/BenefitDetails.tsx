@@ -50,7 +50,7 @@ export function BenefitDetails() {
     }
 
     return (
-        <div className="flex justify-center h-screen">
+        <div className="flex justify-center h-full">
             <div className='flex flex-col w-full p-4 max-w-3xl mx-auto'>
                 <Card className='flex-shrink-0'>
                     <CardHeader>
@@ -62,7 +62,7 @@ export function BenefitDetails() {
                     </CardContent>
                 </Card>
 
-                <div className="flex-grow flex flex-col mt-6 min-h-0 bg-background p-6 rounded-lg border">
+                <div className="flex-grow flex flex-col mt-4 min-h-0 bg-background p-4 rounded-lg border">
                     <div className="flex-shrink-0 flex items-center justify-between mb-4">
                         <h2 className="text-2xl font-semibold">Your Action Plan</h2>
                         <Button variant="outline" className='cursor-pointer' size="icon" onClick={fetchActionPlan} disabled={isLoading}>
@@ -85,7 +85,7 @@ export function BenefitDetails() {
                     </div>
                 </div>
 
-                <Button className="flex-shrink-0 mt-6" asChild>
+                <Button className="flex-shrink-0 mt-4" asChild>
                     <Link to="/benefits">
                         <ArrowLeft className='mr-2' />
                         Back to Benefits List
