@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
-import type { AIRequestBody, AIResponse } from '../src/lib/types.ts';
+import type { AIRequestBody, AIResponse } from '../src/lib/types';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 if (!process.env.GEMINI_API_KEY) {

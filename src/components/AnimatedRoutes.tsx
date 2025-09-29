@@ -14,7 +14,7 @@ const variants = {
 const pageTransition: Transition = {
     type: 'tween',
     ease: 'easeInOut',
-    duration: 0.15,
+    duration: 0.3,
 };
 
 function PageAnimationWrapper({ children }: { children: ReactNode }) {

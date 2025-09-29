@@ -1,8 +1,27 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { useAppContext } from '@/context/AppContext';
+import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Loader2, SearchX } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+        },
+    },
+};
+
+const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+        y: 0,
+        opacity: 1,
+    },
+};
 
 export function BenefitList() {
     const { isLoading, category, benefits } = useAppContext();
@@ -49,25 +68,32 @@ export function BenefitList() {
                 </div>
 
                 <div className="flex-grow scroll-fade">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <motion.div
+                        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
                         {benefits.map(benefit => (
-                            <Card key={benefit.id} className='gap-2'>
-                                <CardHeader className='text-xl font-semibold'>{benefit.title}</CardHeader>
-                                <CardContent className='grow-1'>
-                                    <p className="text-sm text-muted-foreground">{benefit.coverage}</p>
-                                    <p>{benefit.description}</p>
-                                </CardContent>
-                                <CardFooter className='justify-end'>
-                                    <Button variant="link" asChild>
-                                        <Link to={`/benefits/${benefit.id}`}>
-                                            View Details
-                                            <ArrowRight className='ml-2' />
-                                        </Link>
-                                    </Button>
-                                </CardFooter>
-                            </Card>
+                            <motion.div key={benefit.id} variants={itemVariants}>
+                                <Card className='gap-2 h-full'>
+                                    <CardHeader className='text-xl font-semibold'>{benefit.title}</CardHeader>
+                                    <CardContent className='grow-1'>
+                                        <p className="text-sm text-muted-foreground">{benefit.coverage}</p>
+                                        <p>{benefit.description}</p>
+                                    </CardContent>
+                                    <CardFooter className='justify-end'>
+                                        <Button variant="link" asChild>
+                                            <Link to={`/benefits/${benefit.id}`}>
+                                                View Details
+                                                <ArrowRight className='ml-2' />
+                                            </Link>
+                                        </Button>
+                                    </CardFooter>
+                                </Card>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
 
                 <Button className='flex-shrink-0' asChild>
