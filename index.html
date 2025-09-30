@@ -1,13 +1,33 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Benefits App</title>
-  </head>
-  <body>
+    <script>
+        // prevent initial flashbang (FOUC)
+        const theme = localStorage.getItem("ai-benefits-app-theme") || "system";
+        const isDarkTheme = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        if (isDarkTheme) { window.document.documentElement.classList.add("dark"); }
+    </script>
+    <style>
+        body {
+            /* default light bg */
+            background-color: oklch(1 0 0);
+        }
+
+        .dark body {
+            /* default dark bg */
+            background-color: oklch(0.129 0.042 264.695);
+        }
+    </style>
+</head>
+
+<body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-  </body>
+</body>
+
 </html>

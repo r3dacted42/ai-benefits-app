@@ -7,7 +7,7 @@ interface LoadingAnimationProps {
 
 export function LoadingAnimation({ message = 'Analyzing...' }: LoadingAnimationProps) {
     return (
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
             <div className="w-32 h-32">
                 <Lottie animationData={animationData} loop={true} />
             </div>

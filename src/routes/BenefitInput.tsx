@@ -24,7 +24,7 @@ export function BenefitInput() {
 
     const handleSubmit = useCallback(async () => {
         if (!inputValue.trim() || isLoading) return;
-        if (inputValue.includes("unicorn")) {
+        if (inputValue.toLowerCase().includes("unicorn")) {
             toast("🦄🦄🦄", {
                 icon: <Donut />,
                 description: "hehe, nice try.",
@@ -44,7 +44,7 @@ export function BenefitInput() {
                 action: { label: 'OK', onClick: () => { } },
             });
         }
-    }, [inputValue]);
+    }, [inputValue, startBenefitSearch]);
 
     const handleSuggestionClick = (suggestion: string) => {
         setInputValue(suggestion);

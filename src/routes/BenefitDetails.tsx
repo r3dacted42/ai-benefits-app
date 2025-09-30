@@ -39,11 +39,11 @@ export function BenefitDetails() {
         } finally {
             setIsLoading(false);
         }
-    }, [benefit]);
+    }, [benefit, generateActionPlan]);
 
     useEffect(() => {
         fetchActionPlan();
-    }, [id]);
+    }, [id, fetchActionPlan]);
 
     if (!benefit) {
         return (

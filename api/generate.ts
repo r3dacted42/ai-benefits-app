@@ -45,6 +45,7 @@ export default async function handler(
             prompt = `Generate a 3-step action plan for an employee to avail the """${benefitInfo.title}""" benefit. \
                 The benefit has the following coverage: """${benefitInfo.coverage}""" \
                 and description: """${benefitInfo.description}""". \
+                Each step should be a single, concise sentence. \
                 Return ONLY a JSON array of strings describing the steps, like ["1. ...", "2. ...", "3. ..."].`;
         } else {
             return res.status(400).json({ error: 'Invalid prompt type or missing required data' });
