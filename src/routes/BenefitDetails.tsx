@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useAppContext } from '@/context/AppContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Croissant, Donut, MessageSquareWarning, RefreshCw } from 'lucide-react';
+import { ArrowLeft, MessageSquareWarning, RefreshCw } from 'lucide-react';
 
 import allBenefits from '@/data/benefits.json';
 import { LoadingAnimation } from '@/components/LoadingAnimation';
@@ -18,7 +18,6 @@ export function BenefitDetails() {
     const [actionPlan, setActionPlan] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
-    const [errorCount, setErrorCount] = useState(1);
 
     const benefit = allBenefits.find(b => b.id === id) as Benefit;
 
@@ -31,12 +30,11 @@ export function BenefitDetails() {
             setActionPlan(plan);
         } catch (err) {
             setError(true);
-            setErrorCount((count) => count + 1);
             toast(err instanceof Error ? err.message : "An unknown error occurred.", {
-                icon: ((errorCount % 3 == 0) ? <Donut /> : <MessageSquareWarning />),
+                icon: <MessageSquareWarning />,
                 description: "Please try again.",
                 duration: Infinity,
-                action: { label: ((errorCount % 3 == 0) ? <Croissant /> : 'OK'), onClick: () => { fetchActionPlan() } },
+                action: { label: 'OK', onClick: () => { fetchActionPlan() } },
             });
         } finally {
             setIsLoading(false);
@@ -78,18 +76,18 @@ export function BenefitDetails() {
     return (
         <div className="flex justify-center h-full">
             <div className='flex flex-col w-full p-4 max-w-3xl mx-auto'>
-                <Card className='flex-shrink-0'>
+                <Card className='flex-shrink-0 gap-2'>
                     <CardHeader>
-                        <CardTitle className="text-3xl font-semibold">{benefit.title}</CardTitle>
+                        <CardTitle className="text-2xl font-semibold">{benefit.title}</CardTitle>
                         <CardDescription>{benefit.coverage}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <p>{benefit.description}</p>
+                        {benefit.description}
                     </CardContent>
                 </Card>
 
                 <div className="flex-grow flex flex-col mt-4 min-h-0 bg-background p-4 rounded-lg border">
-                    <div className="flex-shrink-0 flex items-center justify-between mb-4">
+                    <div className="flex-shrink-0 flex items-center justify-between">
                         <h2 className="text-2xl font-semibold">Your Action Plan</h2>
                         <Button variant="outline" className='cursor-pointer' size="icon" onClick={fetchActionPlan} disabled={isLoading}>
                             <RefreshCw className={`${isLoading ? 'animate-spin' : ''}`} />
@@ -114,7 +112,7 @@ export function BenefitDetails() {
                 <Button className="flex-shrink-0 mt-4" asChild>
                     <Link to="/benefits">
                         <ArrowLeft className='mr-2' />
-                        Back to Benefits List
+                        Choose a Different Benefit
                     </Link>
                 </Button>
             </div>

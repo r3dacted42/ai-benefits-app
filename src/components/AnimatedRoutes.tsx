@@ -13,7 +13,7 @@ const variants = {
 
 const pageTransition: Transition = {
     type: 'tween',
-    ease: 'easeInOut',
+    ease: 'anticipate',
     duration: 0.3,
 };
 
@@ -37,7 +37,7 @@ export function AnimatedRoutes() {
 
     return (
         <div className="size-full">
-            <AnimatePresence mode="sync" initial={false}>
+            <AnimatePresence mode="wait" initial={false}>
                 <Routes location={location} key={location.pathname}>
                     <Route
                         index
