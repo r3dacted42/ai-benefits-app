@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
+import { GoogleGenAI, HarmBlockThreshold, HarmCategory } from '@google/genai';
 import type { AIRequestBody, AIResponse } from '@/lib/types';
+import { assert } from 'console';
 
 export default async function handler(
     req: VercelRequest,
@@ -15,24 +16,11 @@ export default async function handler(
         res.status(401).json({ error: 'Missing API key' });
         return;
     }
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     const modelVersion = 'gemini-2.5-flash-lite';
 
     try {
         const { promptType, clfInfo, benefitInfo } = req.body as AIRequestBody;
-        const model = genAI.getGenerativeModel({
-            model: modelVersion,
-            safetySettings: [
-                {
-                    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-                    threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-                },
-                {
-                    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                    threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-                },
-            ],
-        });
 
         let prompt = '';
 
@@ -52,12 +40,26 @@ export default async function handler(
             return res.status(400).json({ error: 'Invalid prompt type or missing required data' });
         }
 
-        const result = await model.generateContent(prompt);
-        const response = result.response;
-        const text = response.text();
+        const result = await genAI.models.generateContent({
+            model: modelVersion,
+            contents: prompt,
+            config: {
+                safetySettings: [
+                    {
+                        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+                    },
+                    {
+                        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+                    },
+                ],
+            },
+        });
 
+        const text = result.text || "";
+        assert(text, "AI response text is empty");
         res.status(200).json({ response: text.trim() } as AIResponse);
-
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to generate AI response.' });

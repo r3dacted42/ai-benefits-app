@@ -9,7 +9,7 @@ The app features a multi-screen flow, a robust state management system, dark mod
 ## Project Setup & Demo
 [Vercel Deployment](https://ai-benefits-app.vercel.app/) | [Github Repository](https://github.com/r3dacted42/ai-benefits-app/)  
 1. Copy the `.env.example` file into a `.env` file.
-2. Open the `.env` and add your own Gemini API key in the placeholder for use in development.
+2. Open the new `.env` file and [add your own Gemini API key](https://aistudio.google.com/app/apikey) in the placeholder for use in development.
 3. Run the following commands:
     ```bash
     npm install
