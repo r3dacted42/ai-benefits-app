@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
-import type { AIRequestBody, AIResponse } from '../src/lib/types';
+import type { AIRequestBody, AIResponse } from '@/lib/types';
 
 export default async function handler(
     req: VercelRequest,
