@@ -1,11 +1,22 @@
 # AI-Powered Benefits Discovery App
 
+**Problem Statement 4**  
+
 This web application helps employees discover company benefits relevant to their health needs. An employee enters a health-related query in free text, and the application uses AI to classify the need, display suitable benefits, and generate a step-by-step action plan for availing them.  
 
 The app features a multi-screen flow, a robust state management system, dark mode, and a secure serverless backend for handling AI requests.  
 
-## Live Demo
-[Vercel Deployment](https://ai-benefits-app.vercel.app/)
+## Project Setup & Demo
+[Vercel Deployment](https://ai-benefits-app.vercel.app/) | [Github Repository](https://github.com/r3dacted42/ai-benefits-app/)  
+1. Copy the `.env.example` file into a `.env` file.
+2. Open the `.env` and add your own Gemini API key in the placeholder for use in development.
+3. Run the following commands:
+    ```bash
+    npm install
+    npm run dev:frontend
+    # in different terminal
+    npm run dev:backend
+    ```
 
 ## Key Features
 - **Natural Language Input**: Users can describe their health needs in plain English or select from common suggestions.

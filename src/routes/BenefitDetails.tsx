@@ -42,7 +42,11 @@ export function BenefitDetails() {
     }, [benefit, generateActionPlan]);
 
     useEffect(() => {
-        fetchActionPlan();
+        const timerId = setTimeout(() => {
+            fetchActionPlan();
+        }, 300);
+        // avoid duplicate calls due to React.StrictMode in dev
+        return () => clearTimeout(timerId);
     }, [id, fetchActionPlan]);
 
     if (!benefit) {

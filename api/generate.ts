@@ -2,13 +2,6 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import type { AIRequestBody, AIResponse } from '../src/lib/types';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-if (!process.env.GEMINI_API_KEY) {
-    console.warn("Warning: GEMINI_API_KEY is not set. AI functionalities will not work.");
-}
-const modelVersion = 'gemini-2.5-flash-lite';
-console.log(`Using model version: ${modelVersion}`);
-
 export default async function handler(
     req: VercelRequest,
     res: VercelResponse,
@@ -16,6 +9,14 @@ export default async function handler(
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
+
+    if (!process.env.GEMINI_API_KEY) {
+        console.error("Error: GEMINI_API_KEY is not set. AI functionalities will not work.");
+        res.status(401).json({ error: 'Missing API key' });
+        return;
+    }
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const modelVersion = 'gemini-2.5-flash-lite';
 
     try {
         const { promptType, clfInfo, benefitInfo } = req.body as AIRequestBody;
