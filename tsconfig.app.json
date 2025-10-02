@@ -28,10 +28,10 @@
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
         /* ShadCN config */
-        "baseUrl": ".",
+        // "baseUrl": ".",
         "paths": {
             "@/*": [
-                "src/*"
+                "./src/*"
             ]
         }
     },
